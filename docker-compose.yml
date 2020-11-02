@@ -1,0 +1,16 @@
+version: '3'
+services:
+  database:
+    image: 'postgres:12'
+    container_name: az-func-ts-starter-db
+    environment:
+      - 'POSTGRES_USER=${DB_USERNAME}'
+      - 'POSTGRES_PASSWORD=${DB_PASSWORD}'
+      - 'POSTGRES_DB=${DB_DATABASE}'
+    volumes:
+      - az-func-ts-starter-volume-db-data:/var/lib/postgresql/data/
+    ports:
+      - '${DB_PORT}:5432'
+    command: ['postgres', '-c', 'log_statement=all']
+volumes:
+  az-func-ts-starter-volume-db-data:

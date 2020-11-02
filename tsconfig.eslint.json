@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["./graphql/**/*.ts", ".eslintrc.js"],
+  "exclude": ["node_modules"]
+}
