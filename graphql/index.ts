@@ -5,25 +5,23 @@ import { AzureFunction, Context } from '@azure/functions'
 import { ApolloServer } from 'apollo-server-azure-functions'
 import 'reflect-metadata'
 import { buildSchema } from 'type-graphql'
-import { createConnection } from 'typeorm'
-import ormconfig from '../ormconfig'
+import { IpCityResolver } from './resolvers/IpCityResolver'
 import { PostResolver } from './resolvers/PostResolver'
 import { AppContext } from './util/azure'
+import { getConnection } from './util/db'
 
 let server: ApolloServer
 
 const httpTrigger: AzureFunction = async function (context: Context) {
   if (server === undefined) {
-    const conn = await createConnection(
-      <Parameters<typeof createConnection>[0]>ormconfig,
-    )
+    const conn = await getConnection()
 
     server = new ApolloServer({
       schema: await buildSchema({
-        resolvers: [PostResolver],
+        resolvers: [IpCityResolver, PostResolver],
         validate: false,
       }),
-      context: async ({ context }): Promise<AppContext> => {
+      context: ({ context }): AppContext => {
         return {
           conn,
           azureContext: context,

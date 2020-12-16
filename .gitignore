@@ -46,3 +46,6 @@ __pycache__/
 __blobstorage__
 __queuestorage__
 __azurite*
+
+.terraform/.terraform/
+terraform.tfstate*

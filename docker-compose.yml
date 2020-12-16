@@ -9,6 +9,7 @@ services:
       - 'POSTGRES_DB=${DB_DATABASE}'
     volumes:
       - az-func-ts-starter-volume-db-data:/var/lib/postgresql/data/
+      - ./docker/postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
     ports:
       - '${DB_PORT}:5432'
     command: ['postgres', '-c', 'log_statement=all']
